@@ -2,26 +2,42 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const SplineScene = dynamic(() => import('@/app/components/SplineScene'), {
   ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center w-full h-full text-gray-500 text-sm">
+      Loading Experience...
+    </div>
+  ),
 });
 
 export default function Hero() {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     setIsDesktop(window.innerWidth >= 768);
   }, []);
 
   return (
-    <section className="relative min-h-screen pt-20 bg-[#0a0a0a] text-white px-6 md:px-16 flex flex-col md:flex-row items-center justify-between overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-screen pt-24 bg-[#0a0a0a] text-white px-6 md:px-16 flex flex-col md:flex-row items-center justify-between overflow-hidden"
+    >
 
-      {/* 🔥 SUBTLE AMBIENT LIGHT */}
-      <div className="absolute top-[-100px] right-[-100px] w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[100px] md:blur-[120px] rounded-full"></div>
+      {/* 🔥 AMBIENT LIGHT */}
+      <div className="absolute top-[-120px] right-[-120px] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 blur-[120px] rounded-full" />
 
-      {/* LEFT SIDE */}
-      <div className="max-w-xl z-10 text-center md:text-left">
+      {/* LEFT CONTENT */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-xl z-10 text-center md:text-left"
+      >
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight tracking-wide">
           ENGINEERING <br />
           IDEAS <br />
@@ -47,26 +63,30 @@ export default function Hero() {
             View Work
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* RIGHT SIDE */}
-      <div className="relative w-full md:w-[650px] mt-10 md:mt-0 z-10 flex items-center justify-center h-[260px] sm:h-[320px] md:h-[520px]">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="relative w-full md:w-[650px] mt-10 md:mt-0 z-10 flex items-center justify-center h-[260px] sm:h-[320px] md:h-[520px]"
+      >
 
         {/* 🔥 GLOW */}
-        <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[100px] md:blur-[120px] rounded-full"></div>
+        <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[120px] rounded-full" />
 
-        {/* ✅ ONLY ONE INSTANCE */}
-        {isDesktop ? (
+        {/* ⚡ SMART RENDER */}
+        {mounted && isDesktop ? (
           <SplineScene />
         ) : (
           <img
             src="/robot-preview.png"
             alt="Robot Preview"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         )}
-
-      </div>
+      </motion.div>
 
     </section>
   );
