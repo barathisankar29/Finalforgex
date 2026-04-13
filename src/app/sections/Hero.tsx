@@ -39,12 +39,25 @@ export default function Hero() {
       {/* 🔥 AMBIENT LIGHT */}
       <div className="absolute top-[-120px] right-[-120px] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-white/5 blur-[120px] rounded-full" />
 
-      {/* LEFT CONTENT */}
+      {/* 🔥 ROBOT (FIRST IN MOBILE) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="order-1 md:order-2 relative w-full md:w-[650px] mt-6 md:mt-0 z-10 flex items-center justify-center 
+                   h-[200px] sm:h-[260px] md:h-[520px]"
+      >
+        <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[120px] rounded-full" />
+
+        {mounted && <SplineScene />}
+      </motion.div>
+
+      {/* 🔥 TEXT (SECOND IN MOBILE) */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-xl z-10 text-center md:text-left"
+        className="order-2 md:order-1 max-w-xl z-10 text-center md:text-left mt-8 md:mt-0"
       >
         <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight tracking-wide">
           ENGINEERING <br />
@@ -61,7 +74,6 @@ export default function Hero() {
           scalable products.
         </p>
 
-        {/* BUTTONS */}
         <div className="mt-6 md:mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
           <button
             onClick={() => scrollToSection('contact')}
@@ -77,21 +89,6 @@ export default function Hero() {
             View Work
           </button>
         </div>
-      </motion.div>
-
-      {/* RIGHT SIDE */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative w-full md:w-[650px] mt-10 md:mt-0 z-10 flex items-center justify-center 
-                   h-[200px] sm:h-[260px] md:h-[520px]"
-      >
-        {/* 🔥 GLOW */}
-        <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[120px] rounded-full" />
-
-        {/* ✅ ALWAYS SHOW 3D */}
-        {mounted && <SplineScene />}
       </motion.div>
     </section>
   );
