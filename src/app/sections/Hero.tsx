@@ -14,12 +14,10 @@ const SplineScene = dynamic(() => import('@/app/components/SplineScene'), {
 });
 
 export default function Hero() {
-  const [isDesktop, setIsDesktop] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setIsDesktop(window.innerWidth >= 768);
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -87,19 +85,13 @@ export default function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative w-full md:w-[650px] mt-10 md:mt-0 z-10 flex items-center justify-center 
-                   h-[180px] sm:h-[240px] md:h-[520px]"  // ✅ ONLY CHANGE (smaller mobile)
+                   h-[200px] sm:h-[260px] md:h-[520px]"
       >
+        {/* 🔥 GLOW */}
         <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[120px] rounded-full" />
 
-        {mounted && isDesktop ? (
-          <SplineScene />
-        ) : (
-          <img
-            src="/robot-preview.png"
-            alt="Robot Preview"
-            className="w-full h-full object-contain"
-          />
-        )}
+        {/* ✅ ALWAYS SHOW 3D */}
+        {mounted && <SplineScene />}
       </motion.div>
     </section>
   );
