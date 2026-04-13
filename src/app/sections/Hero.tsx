@@ -22,12 +22,11 @@ export default function Hero() {
     setIsDesktop(window.innerWidth >= 768);
   }, []);
 
-  // 🔥 SCROLL FUNCTION (WITH OFFSET FIX)
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
 
-    const yOffset = -80; // adjust if header height changes
+    const yOffset = -80;
     const y =
       el.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
@@ -64,10 +63,8 @@ export default function Hero() {
           scalable products.
         </p>
 
-        {/* 🔥 BUTTONS */}
+        {/* BUTTONS */}
         <div className="mt-6 md:mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-          
-          {/* ✅ GET STARTED → CONTACT */}
           <button
             onClick={() => scrollToSection('contact')}
             className="bg-[#ff6a00] px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-medium shadow-[0_0_20px_rgba(255,106,0,0.4)] hover:scale-105 transition"
@@ -75,14 +72,12 @@ export default function Hero() {
             Get Started
           </button>
 
-          {/* ✅ VIEW WORK → WORK */}
           <button
             onClick={() => scrollToSection('work')}
             className="border border-[#ff6a00] px-5 py-2.5 md:px-6 md:py-3 rounded-xl text-[#ff6a00] hover:bg-[#ff6a00] hover:text-black transition"
           >
             View Work
           </button>
-
         </div>
       </motion.div>
 
@@ -91,12 +86,11 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative w-full md:w-[650px] mt-10 md:mt-0 z-10 flex items-center justify-center h-[260px] sm:h-[320px] md:h-[520px]"
+        className="relative w-full md:w-[650px] mt-10 md:mt-0 z-10 flex items-center justify-center 
+                   h-[180px] sm:h-[240px] md:h-[520px]"  // ✅ ONLY CHANGE (smaller mobile)
       >
-        {/* 🔥 GLOW */}
         <div className="absolute w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-white/5 blur-[120px] rounded-full" />
 
-        {/* ⚡ SMART RENDER */}
         {mounted && isDesktop ? (
           <SplineScene />
         ) : (

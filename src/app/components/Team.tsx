@@ -19,7 +19,7 @@ const team = [
     name: 'Barathi Sankar',
     role: 'UI/UX Designer',
     desc: 'Designs intuitive interfaces and delightful user experiences that drive engagement.',
-    image: '/team3.1.jpeg',
+    image: '/team3.2.jpeg',
   },
   {
     name: 'Derin',
@@ -53,13 +53,9 @@ export default function Team() {
         <source src="/team-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* 🌫 DARK OVERLAY (IMPORTANT FOR READABILITY) */}
       <div className="absolute inset-0 bg-[#0a0a0a]/20"></div>
-
-      {/* 🌫 GRADIENT FADE */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/40 to-[#0a0a0a]" />
 
-      {/* 🔥 MAIN CONTENT */}
       <div className="relative z-10">
 
         {/* TITLE */}
@@ -73,13 +69,11 @@ export default function Team() {
           </p>
         </div>
 
-        {/* TIMELINE WRAPPER */}
         <div className="relative">
 
-          {/* CENTER LINE */}
+          {/* CENTER LINE (DESKTOP ONLY) */}
           <div className="hidden md:block absolute left-1/2 top-0 w-[1px] h-full bg-[#ff6a00]/20" />
 
-          {/* MEMBERS */}
           <div className="space-y-28">
 
             {team.map((member, i) => {
@@ -95,63 +89,89 @@ export default function Team() {
                   className="relative flex flex-col md:flex-row items-center gap-10"
                 >
 
-                  {/* LEFT */}
-                  {!isRight && (
-                    <>
-                      <div className="w-full md:w-1/2 flex justify-center">
-                        <div className="relative">
-                          <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
-                          <img
-                            src={member.image}
-                            className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40"
-                          />
-                        </div>
+                  {/* 🔥 MOBILE ONLY (FIXED STACK) */}
+                  <div className="md:hidden text-center w-full">
+                    <div className="flex justify-center">
+                      <div className="relative">
+                        <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
+                        <img
+                          src={member.image}
+                          className="relative w-[140px] h-[140px] rounded-full border border-[#ff6a00]/40"
+                        />
                       </div>
+                    </div>
 
-                      <div className="w-full md:w-1/2">
-                        <div className="p-6 rounded-2xl border border-[#ff6a00]/20 bg-white/5 backdrop-blur-xl">
-                          <h3 className="text-xl font-bold">{member.name}</h3>
+                    <h3 className="mt-4 text-lg font-bold">{member.name}</h3>
 
-                          <p className="mt-1 text-[#ff6a00] text-sm">
-                            {member.role}
-                          </p>
+                    <p className="mt-1 text-[#ff6a00] text-sm">
+                      {member.role}
+                    </p>
 
-                          <p className="mt-3 text-gray-400 text-sm leading-relaxed">
-                            {member.desc}
-                          </p>
+                    <p className="mt-3 text-gray-400 text-sm">
+                      {member.desc}
+                    </p>
+                  </div>
+
+                  {/* 🔥 DESKTOP (UNCHANGED ORIGINAL) */}
+                  <div className="hidden md:flex w-full">
+
+                    {!isRight && (
+                      <>
+                        <div className="w-1/2 flex justify-center">
+                          <div className="relative">
+                            <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
+                            <img
+                              src={member.image}
+                              className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  )}
 
-                  {/* RIGHT */}
-                  {isRight && (
-                    <>
-                      <div className="w-full md:w-1/2">
-                        <div className="p-6 rounded-2xl border border-[#ff6a00]/20 bg-white/5 backdrop-blur-xl">
-                          <h3 className="text-xl font-bold">{member.name}</h3>
+                        <div className="w-1/2">
+                          <div className="p-6 rounded-2xl border border-[#ff6a00]/20 bg-white/5 backdrop-blur-xl">
+                            <h3 className="text-xl font-bold">{member.name}</h3>
 
-                          <p className="mt-1 text-[#ff6a00] text-sm">
-                            {member.role}
-                          </p>
+                            <p className="mt-1 text-[#ff6a00] text-sm">
+                              {member.role}
+                            </p>
 
-                          <p className="mt-3 text-gray-400 text-sm leading-relaxed">
-                            {member.desc}
-                          </p>
+                            <p className="mt-3 text-gray-400 text-sm leading-relaxed">
+                              {member.desc}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      </>
+                    )}
 
-                      <div className="w-full md:w-1/2 flex justify-center">
-                        <div className="relative">
-                          <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
-                          <img
-                            src={member.image}
-                            className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40"
-                          />
+                    {isRight && (
+                      <>
+                        <div className="w-1/2">
+                          <div className="p-6 rounded-2xl border border-[#ff6a00]/20 bg-white/5 backdrop-blur-xl">
+                            <h3 className="text-xl font-bold">{member.name}</h3>
+
+                            <p className="mt-1 text-[#ff6a00] text-sm">
+                              {member.role}
+                            </p>
+
+                            <p className="mt-3 text-gray-400 text-sm leading-relaxed">
+                              {member.desc}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  )}
+
+                        <div className="w-1/2 flex justify-center">
+                          <div className="relative">
+                            <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
+                            <img
+                              src={member.image}
+                              className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                  </div>
 
                   {/* DOT */}
                   <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-[#ff6a00] rounded-full shadow-[0_0_10px_#ff6a00]" />

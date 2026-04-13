@@ -7,32 +7,27 @@ const services = [
   {
     title: 'SaaS Development',
     desc: 'Build scalable, cloud-native SaaS platforms.',
-    details:
-      'We design and develop full SaaS ecosystems including authentication, billing, dashboards, and scalable backend systems.',
+    details: 'We design and develop full SaaS ecosystems including authentication, billing, dashboards, and scalable backend systems.',
   },
   {
     title: 'IoT & Hardware',
     desc: 'Bridge hardware and software.',
-    details:
-      'From sensors to cloud dashboards, we build complete IoT pipelines with real-time data processing.',
+    details: 'From sensors to cloud dashboards, we build complete IoT pipelines with real-time data processing.',
   },
   {
     title: 'Admin Dashboards',
     desc: 'Data-driven dashboards.',
-    details:
-      'Modern dashboards with analytics, charts, and real-time monitoring systems.',
+    details: 'Modern dashboards with analytics, charts, and real-time monitoring systems.',
   },
   {
     title: 'Web Development',
     desc: 'High-performance web apps.',
-    details:
-      'Fast, responsive, and SEO-friendly applications using modern frameworks.',
+    details: 'Fast, responsive, and SEO-friendly applications using modern frameworks.',
   },
   {
     title: 'Academic Projects',
     desc: 'Research to real-world systems.',
-    details:
-      'We convert academic ideas into working prototypes and production-ready systems.',
+    details: 'We convert academic ideas into working prototypes and production-ready systems.',
   },
 ];
 
@@ -43,23 +38,47 @@ export default function Services() {
     document.body.style.overflow = active !== null ? 'hidden' : 'auto';
   }, [active]);
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setActive(null);
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
+  const container = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: 0.12 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, scale: 0.8, y: 40 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
 
   return (
     <section
       id="services"
       className="relative bg-[#0a0a0a] text-white px-6 md:px-16 py-32 overflow-hidden"
     >
-      {/* 🔥 BACKGROUND GLOW */}
+
+      {/* 🔥 PRO GRID (FIXED) */}
+      <div className="absolute inset-0 overflow-hidden opacity-10">
+
+        {/* Horizontal lines */}
+        <div className="absolute inset-0 bg-[linear-gradient(#ff6a00_1px,transparent_1px)] bg-[size:60px_60px] animate-[gridMoveY_40s_linear_infinite]" />
+
+        {/* Vertical lines */}
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,#ff6a00_1px,transparent_1px)] bg-[size:60px_60px] animate-[gridMoveX_40s_linear_infinite]" />
+
+        {/* Fade mask (premium touch) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+
+      </div>
+
+      {/* GLOW */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px]" />
       </div>
 
       {/* TITLE */}
@@ -67,70 +86,33 @@ export default function Services() {
         <h2 className="text-4xl md:text-5xl font-bold">
           OUR <span className="text-[#ff6a00]">SERVICES</span>
         </h2>
-        <p className="mt-4 text-gray-400">
-          We deliver end-to-end solutions across multiple domains.
-        </p>
       </div>
 
       {/* CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10"
+      >
         {services.map((s, i) => (
           <motion.div
             key={i}
+            variants={item}
             onClick={() => setActive(i)}
-            whileHover={{ y: -10 }}
-            className="cursor-pointer p-6 rounded-2xl border border-[#ff6a00]/20 bg-white/5 backdrop-blur-xl relative overflow-hidden group"
+            whileHover={{ y: -10, scale: 1.04 }}
+            className="p-6 rounded-2xl border border-[#ff6a00]/20 bg-white/5 backdrop-blur-xl relative overflow-hidden group"
           >
-            {/* 🔥 HOVER GLOW */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_center,rgba(255,106,0,0.2),transparent_70%)]" />
 
-            <h3 className="text-xl font-semibold text-[#ff6a00] relative z-10">
-              {s.title}
-            </h3>
+            {/* 🔥 Hover glow */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle,rgba(255,106,0,0.25),transparent)]" />
 
-            <p className="mt-4 text-gray-400 text-sm relative z-10">
-              {s.desc}
-            </p>
+            <h3 className="text-xl text-[#ff6a00]">{s.title}</h3>
+            <p className="mt-3 text-gray-400 text-sm">{s.desc}</p>
+
           </motion.div>
         ))}
-      </div>
-
-      {/* MODAL */}
-      <AnimatePresence>
-        {active !== null && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/70 backdrop-blur-md z-40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActive(null)}
-            />
-
-            <motion.div
-              className="fixed top-1/2 left-1/2 z-50 w-[90%] md:w-[500px] -translate-x-1/2 -translate-y-1/2 p-8 rounded-2xl border border-[#ff6a00]/30 bg-[#111]"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-            >
-              <h3 className="text-2xl font-bold text-[#ff6a00]">
-                {services[active].title}
-              </h3>
-
-              <p className="mt-4 text-gray-300">
-                {services[active].details}
-              </p>
-
-              <button
-                onClick={() => setActive(null)}
-                className="mt-6 px-4 py-2 bg-[#ff6a00] rounded-lg hover:scale-105 transition"
-              >
-                Close
-              </button>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      </motion.div>
     </section>
   );
 }

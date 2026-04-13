@@ -57,10 +57,12 @@ const projects = [
 export default function Work() {
   const [active, setActive] = useState<number | null>(null);
 
+  // 🔒 Lock scroll when modal opens
   useEffect(() => {
     document.body.style.overflow = active !== null ? 'hidden' : 'auto';
   }, [active]);
 
+  // ⌨️ ESC close
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setActive(null);
@@ -69,15 +71,50 @@ export default function Work() {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
+  // 🔥 ANIMATION CONFIG
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.12,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, scale: 0.8, y: 50 },
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
     <section
       id="work"
       className="relative bg-[#0a0a0a] text-white px-6 md:px-16 py-32 overflow-hidden"
     >
-      {/* 🔥 BACKGROUND GLOW */}
+
+      {/* 🔥 FIXED GRID */}
+<div className="absolute inset-0 overflow-hidden opacity-10">
+
+  {/* Horizontal */}
+  <div className="absolute inset-0 bg-[linear-gradient(#ff6a00_1px,transparent_1px)] bg-[size:60px_60px] animate-[gridMoveY_40s_linear_infinite]" />
+
+  {/* Vertical */}
+  <div className="absolute inset-0 bg-[linear-gradient(90deg,#ff6a00_1px,transparent_1px)] bg-[size:60px_60px] animate-[gridMoveX_40s_linear_infinite]" />
+
+  {/* Fade */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+
+</div>
+
+      {/* 🔥 GLOW */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px]" />
       </div>
 
       {/* TITLE */}
@@ -91,16 +128,23 @@ export default function Work() {
       </div>
 
       {/* GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10"
+      >
         {projects.map((p, i) => (
           <motion.div
             key={i}
+            variants={item}
             onClick={() => setActive(i)}
-            whileHover={{ y: -10 }}
+            whileHover={{ scale: 1.05, y: -10 }}
             className="relative cursor-pointer rounded-2xl border border-[#ff6a00]/20 overflow-hidden bg-[#111] group"
           >
+
             {/* 🔥 SPOTLIGHT */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_center,rgba(255,106,0,0.15),transparent_60%)]" />
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle,rgba(255,106,0,0.2),transparent_60%)]" />
 
             {/* IMAGE */}
             <img
@@ -127,9 +171,9 @@ export default function Work() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* MODAL */}
+      {/* 🔥 MODAL */}
       <AnimatePresence>
         {active !== null && (
           <>
@@ -144,7 +188,10 @@ export default function Work() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
             >
-              <img src={projects[active].image} className="w-full h-60 object-cover" />
+              <img
+                src={projects[active].image}
+                className="w-full h-60 object-cover"
+              />
 
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-[#ff6a00]">
@@ -155,9 +202,20 @@ export default function Work() {
                   {projects[active].details}
                 </p>
 
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {projects[active].tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs px-3 py-1 border border-[#ff6a00]/30 rounded-full text-[#ff6a00]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
                 <button
                   onClick={() => setActive(null)}
-                  className="mt-6 px-4 py-2 bg-[#ff6a00] rounded-lg"
+                  className="mt-6 px-4 py-2 bg-[#ff6a00] rounded-lg hover:scale-105 transition"
                 >
                   Close
                 </button>
