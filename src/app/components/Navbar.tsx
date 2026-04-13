@@ -9,6 +9,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // 🔥 SCROLL DETECTION
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -33,16 +34,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 🔥 SCROLL FUNCTION (WITH OFFSET)
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) {
-      const yOffset = -80;
-      const y =
-        el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    if (!el) return;
 
-      window.scrollTo({ top: y, behavior: 'smooth' });
-      setMenuOpen(false);
-    }
+    const yOffset = -80; // header height adjust
+    const y =
+      el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    setMenuOpen(false); // close mobile menu
   };
 
   return (
@@ -55,6 +57,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
 
+        {/* LOGO */}
         <h1
           className="text-xl font-bold cursor-pointer"
           onClick={() => scrollTo('home')}
@@ -62,6 +65,7 @@ export default function Navbar() {
           Final<span className="text-[#ff6a00]">ForgeX</span>
         </h1>
 
+        {/* DESKTOP NAV */}
         <nav className="hidden md:flex gap-8 text-gray-300">
           {sections.map((sec) => (
             <button
@@ -79,18 +83,24 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <button className="hidden md:block bg-[#ff6a00] px-5 py-2 rounded-xl font-medium hover:scale-105 transition">
+        {/* 🔥 DESKTOP GET STARTED */}
+        <button
+          onClick={() => scrollTo('contact')}
+          className="hidden md:block bg-[#ff6a00] px-5 py-2 rounded-xl font-medium hover:scale-105 transition shadow-[0_0_15px_rgba(255,106,0,0.4)]"
+        >
           Get Started
         </button>
 
+        {/* MOBILE TOGGLE */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden text-white"
+          className="md:hidden text-white text-2xl"
         >
           ☰
         </button>
       </div>
 
+      {/* 📱 MOBILE MENU */}
       {menuOpen && (
         <div className="md:hidden bg-[#0a0a0a]/95 backdrop-blur-xl px-6 py-6 space-y-4">
           {sections.map((sec) => (
@@ -104,6 +114,14 @@ export default function Navbar() {
               {sec}
             </button>
           ))}
+
+          {/* 🔥 MOBILE GET STARTED */}
+          <button
+            onClick={() => scrollTo('contact')}
+            className="w-full mt-4 bg-[#ff6a00] px-5 py-2 rounded-xl font-medium"
+          >
+            Get Started
+          </button>
         </div>
       )}
     </header>

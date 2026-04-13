@@ -1,12 +1,12 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const projects = [
   {
     title: 'Enterprise Analytics Platform',
-    desc: 'Real-time data visualization dashboard for Fortune 500 client',
+    desc: 'Real-time data visualization dashboard',
     details:
       'Built a scalable analytics system with real-time dashboards, role-based access, and cloud deployment.',
     tags: ['SaaS', 'Dashboard', 'React'],
@@ -14,9 +14,9 @@ const projects = [
   },
   {
     title: 'IoT Smart Building System',
-    desc: 'Integrated sensor network with cloud monitoring',
+    desc: 'Integrated sensor network',
     details:
-      'End-to-end IoT system connecting hardware sensors to cloud dashboards with automation features.',
+      'End-to-end IoT system connecting hardware sensors to cloud dashboards.',
     tags: ['IoT', 'Hardware', 'Cloud'],
     image: '/ffx.jpeg',
   },
@@ -24,32 +24,32 @@ const projects = [
     title: 'FinTech Payment Gateway',
     desc: 'Secure payment processing system',
     details:
-      'High-performance payment gateway with fraud detection, APIs, and secure transaction handling.',
+      'High-performance payment gateway with fraud detection and APIs.',
     tags: ['SaaS', 'Security', 'API'],
     image: '/ffx.jpeg',
   },
   {
     title: 'Healthcare Portal',
-    desc: 'Patient management and telemedicine',
+    desc: 'Patient management system',
     details:
-      'HIPAA-compliant healthcare system with appointment booking, video consultations, and records.',
-    tags: ['Web', 'Healthcare', 'Compliance'],
+      'Healthcare system with appointments, video calls, and records.',
+    tags: ['Web', 'Healthcare'],
     image: '/ffx.jpeg',
   },
   {
     title: 'E-Commerce Platform',
-    desc: 'Multi-vendor marketplace system',
+    desc: 'Multi-vendor marketplace',
     details:
-      'Full-stack marketplace with vendor dashboards, payment integration, and inventory management.',
-    tags: ['Web', 'E-Commerce', 'Full-Stack'],
+      'Full-stack marketplace with vendor dashboards and payments.',
+    tags: ['Web', 'E-Commerce'],
     image: '/ffx.jpeg',
   },
   {
     title: 'AI Research Prototype',
-    desc: 'Machine learning deployment system',
+    desc: 'Machine learning deployment',
     details:
-      'Prototype system for deploying ML models with experiment tracking and performance analytics.',
-    tags: ['AI', 'Research', 'Academic'],
+      'System for deploying ML models with analytics.',
+    tags: ['AI', 'Research'],
     image: '/ffx.jpeg',
   },
 ];
@@ -57,44 +57,61 @@ const projects = [
 export default function Work() {
   const [active, setActive] = useState<number | null>(null);
 
+  useEffect(() => {
+    document.body.style.overflow = active !== null ? 'hidden' : 'auto';
+  }, [active]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActive(null);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
   return (
-    <section className="bg-[#0a0a0a] text-white px-6 md:px-16 py-32">
+    <section
+      id="work"
+      className="relative bg-[#0a0a0a] text-white px-6 md:px-16 py-32 overflow-hidden"
+    >
+      {/* 🔥 BACKGROUND GLOW */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#ff6a00]/10 blur-[120px] rounded-full" />
+      </div>
 
       {/* TITLE */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-16 relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold">
           OUR <span className="text-[#ff6a00]">WORK</span>
         </h2>
-
         <p className="mt-4 text-gray-400 max-w-xl mx-auto">
-          Showcasing production-ready solutions across industries.
+          Showcasing production-ready solutions.
         </p>
       </div>
 
       {/* GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
         {projects.map((p, i) => (
           <motion.div
             key={i}
             onClick={() => setActive(i)}
             whileHover={{ y: -10 }}
-            className="cursor-pointer rounded-2xl border border-[#ff6a00]/20 overflow-hidden bg-[#111] group"
+            className="relative cursor-pointer rounded-2xl border border-[#ff6a00]/20 overflow-hidden bg-[#111] group"
           >
+            {/* 🔥 SPOTLIGHT */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-[radial-gradient(circle_at_center,rgba(255,106,0,0.15),transparent_60%)]" />
 
             {/* IMAGE */}
-            <div className="overflow-hidden">
-              <img
-                src={p.image}
-                alt={p.title}
-                className="w-full h-48 object-cover transition duration-500 group-hover:scale-110"
-              />
-            </div>
+            <img
+              src={p.image}
+              alt={p.title}
+              className="w-full h-48 object-cover transition duration-500 group-hover:scale-110"
+            />
 
             {/* CONTENT */}
             <div className="p-6">
               <h3 className="text-lg font-semibold">{p.title}</h3>
-
               <p className="mt-2 text-gray-400 text-sm">{p.desc}</p>
 
               <div className="flex flex-wrap gap-2 mt-4">
@@ -110,39 +127,26 @@ export default function Work() {
             </div>
           </motion.div>
         ))}
-
       </div>
 
-      {/* 🔥 MODAL */}
+      {/* MODAL */}
       <AnimatePresence>
         {active !== null && (
           <>
-            {/* BACKDROP */}
             <motion.div
               className="fixed inset-0 bg-black/70 backdrop-blur-md z-40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               onClick={() => setActive(null)}
             />
 
-            {/* MODAL */}
             <motion.div
               className="fixed top-1/2 left-1/2 z-50 w-[90%] md:w-[700px] -translate-x-1/2 -translate-y-1/2 bg-[#111] border border-[#ff6a00]/30 rounded-2xl overflow-hidden"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
             >
+              <img src={projects[active].image} className="w-full h-60 object-cover" />
 
-              {/* IMAGE */}
-              <img
-                src={projects[active].image}
-                className="w-full h-60 object-cover"
-              />
-
-              {/* CONTENT */}
               <div className="p-6">
-
                 <h3 className="text-2xl font-bold text-[#ff6a00]">
                   {projects[active].title}
                 </h3>
@@ -151,30 +155,17 @@ export default function Work() {
                   {projects[active].details}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {projects[active].tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs px-3 py-1 border border-[#ff6a00]/30 rounded-full text-[#ff6a00]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
                 <button
                   onClick={() => setActive(null)}
                   className="mt-6 px-4 py-2 bg-[#ff6a00] rounded-lg"
                 >
                   Close
                 </button>
-
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-
     </section>
   );
 }
