@@ -19,7 +19,7 @@ const team = [
     name: 'Barathi Sankar',
     role: 'UI/UX Designer',
     desc: 'Designs intuitive interfaces and delightful user experiences that drive engagement.',
-    image: '/team3.jpeg',
+    image: '/team3.1.jpeg',
   },
   {
     name: 'Derin',
