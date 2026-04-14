@@ -33,6 +33,14 @@ const team = [
     desc: 'Manages data architecture and ensures optimal performance, security, and scalability.',
     image: '/team5.jpeg',
   },
+
+  // 🔥 NEW MEMBER
+  {
+    name: 'Keerthivarman',
+    role: 'Social Media Manager',
+    desc: 'Drives brand growth through strategy, content, and audience engagement.',
+    image: '/team6.jpeg', // 👉 add image in public folder
+  },
 ];
 
 export default function Team() {
@@ -42,7 +50,7 @@ export default function Team() {
       className="relative bg-[#0a0a0a] text-white px-6 md:px-16 py-32 overflow-hidden"
     >
 
-      {/* 🎬 VIDEO BACKGROUND */}
+      {/* VIDEO BG */}
       <video
         autoPlay
         loop
@@ -71,7 +79,7 @@ export default function Team() {
 
         <div className="relative">
 
-          {/* CENTER LINE (DESKTOP ONLY) */}
+          {/* CENTER LINE */}
           <div className="hidden md:block absolute left-1/2 top-0 w-[1px] h-full bg-[#ff6a00]/20" />
 
           <div className="space-y-28">
@@ -89,16 +97,15 @@ export default function Team() {
                   className="relative flex flex-col md:flex-row items-center gap-10"
                 >
 
-                  {/* 🔥 MOBILE ONLY (FIXED STACK) */}
-                  <div className="md:hidden text-center w-full">
-                    <div className="flex justify-center">
-                      <div className="relative">
-                        <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
-                        <img
-                          src={member.image}
-                          className="relative w-[140px] h-[140px] rounded-full border border-[#ff6a00]/40"
-                        />
-                      </div>
+                  {/* 🔥 MOBILE (PERFECT STACK) */}
+                  <div className="md:hidden w-full text-center flex flex-col items-center">
+
+                    <div className="relative">
+                      <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
+                      <img
+                        src={member.image}
+                        className="relative w-[140px] h-[140px] rounded-full border border-[#ff6a00]/40 object-cover"
+                      />
                     </div>
 
                     <h3 className="mt-4 text-lg font-bold">{member.name}</h3>
@@ -107,12 +114,12 @@ export default function Team() {
                       {member.role}
                     </p>
 
-                    <p className="mt-3 text-gray-400 text-sm">
+                    <p className="mt-3 text-gray-400 text-sm max-w-xs">
                       {member.desc}
                     </p>
                   </div>
 
-                  {/* 🔥 DESKTOP (UNCHANGED ORIGINAL) */}
+                  {/* DESKTOP */}
                   <div className="hidden md:flex w-full">
 
                     {!isRight && (
@@ -122,7 +129,7 @@ export default function Team() {
                             <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
                             <img
                               src={member.image}
-                              className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40"
+                              className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40 object-cover"
                             />
                           </div>
                         </div>
@@ -164,7 +171,7 @@ export default function Team() {
                             <div className="absolute inset-0 rounded-full bg-[#ff6a00]/20 blur-2xl" />
                             <img
                               src={member.image}
-                              className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40"
+                              className="relative w-[180px] h-[180px] rounded-full border border-[#ff6a00]/40 object-cover"
                             />
                           </div>
                         </div>
